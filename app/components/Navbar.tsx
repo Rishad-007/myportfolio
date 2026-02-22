@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Home, Briefcase, Mail, Award } from "lucide-react";
+import { Home, Briefcase, Mail, Award, FolderKanban } from "lucide-react";
+import { useActiveSection } from "../hooks/useActiveSection";
 
 export default function Navbar() {
-  const [activeSection, setActiveSection] = useState("home");
+  const activeSection = useActiveSection();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -21,11 +22,11 @@ export default function Navbar() {
     { id: "home", label: "Home", icon: Home },
     { id: "skills", label: "Skills", icon: Award },
     { id: "experience", label: "Experience", icon: Briefcase },
+    { id: "projects", label: "Projects", icon: FolderKanban },
     { id: "contact", label: "Contact", icon: Mail },
   ];
 
   const scrollToSection = (sectionId: string) => {
-    setActiveSection(sectionId);
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -37,16 +38,16 @@ export default function Navbar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed left-1/2 top-6 z-50 -translate-x-1/2 transition-all duration-300 ${
+      className={`fixed left-1/2 top-6 z-50 w-[calc(100%-1.5rem)] max-w-max -translate-x-1/2 transition-all duration-300 ${
         scrolled ? "top-4" : "top-6"
       }`}
     >
       <div
-        className={`glass flex items-center gap-2 rounded-full px-6 py-3 shadow-2xl backdrop-blur-md transition-all duration-300 ${
+        className={`glass flex items-center gap-1 overflow-x-auto rounded-full px-3 py-2 shadow-2xl backdrop-blur-md transition-all duration-300 sm:gap-2 sm:px-5 sm:py-3 ${
           scrolled ? "scale-95" : "scale-100"
         }`}
       >
-        {navItems.map((item, index) => {
+        {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeSection === item.id;
 
@@ -54,13 +55,13 @@ export default function Navbar() {
             <motion.button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className="group relative px-4 py-2 transition-all duration-300"
+              className="group relative shrink-0 px-3 py-1.5 transition-all duration-300 sm:px-4 sm:py-2"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               {/* Glow effect on hover */}
               <motion.div
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-[#FF6B00] to-[#FFA500] opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-70"
+                className="absolute inset-0 rounded-full bg-linear-to-r from-[#FF6B00] to-[#FFA500] opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-70"
                 initial={false}
                 animate={{
                   opacity: isActive ? 0.5 : 0,
@@ -77,7 +78,7 @@ export default function Navbar() {
                   }`}
                 />
                 <span
-                  className={`hidden text-sm font-medium transition-colors duration-300 sm:inline ${
+                  className={`text-xs font-medium transition-colors duration-300 sm:text-sm ${
                     isActive
                       ? "text-[#FF6B00]"
                       : "text-white/90 group-hover:text-[#FF6B00]"
