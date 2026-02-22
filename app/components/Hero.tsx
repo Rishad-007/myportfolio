@@ -71,16 +71,17 @@ export default function Hero() {
             className="flex justify-center lg:justify-start"
           >
             <motion.button
+              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
               className="group relative overflow-hidden rounded-full bg-[#FF6B00] px-10 py-5 text-xl font-semibold text-white shadow-2xl shadow-[#FF6B00]/50 transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <span className="relative z-10">Hire Me</span>
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-[#FF6B00] to-[#FFA500]"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: 0 }}
-                transition={{ duration: 0.3 }}
+            className="absolute inset-0 bg-linear-to-r from-[#FF6B00] to-[#FFA500]"
+            initial={{ x: "-100%" }}
+            whileHover={{ x: 0 }}
+            transition={{ duration: 0.3 }}
               />
             </motion.button>
           </motion.div>
