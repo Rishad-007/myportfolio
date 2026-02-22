@@ -10,7 +10,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Noah - Web Developer Portfolio",
+  title: "Rishad nur",
   description:
     "Crafting beautiful, functional, and user-friendly web experiences with modern technologies. Portfolio of Noah, a creative web developer.",
 };
