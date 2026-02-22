@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
 import Image from "next/image";
 import OrbitalAnimation from "./OrbitalAnimation";
 
@@ -23,7 +22,7 @@ export default function Hero() {
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="z-10 flex flex-col space-y-8 text-center lg:text-left"
+          className="order-2 z-10 flex flex-col space-y-8 text-center lg:order-1 lg:text-left"
         >
           {/* Main Heading */}
           <div className="space-y-4">
@@ -42,7 +41,7 @@ export default function Hero() {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="text-6xl font-bold tracking-tight text-white md:text-7xl lg:text-8xl xl:text-9xl"
             >
-              Noah
+              Rishad
             </motion.h1>
 
             <motion.h3
@@ -51,11 +50,10 @@ export default function Hero() {
               transition={{ delay: 0.6, duration: 0.6 }}
               className="text-3xl font-bold tracking-wide text-[#FF6B00] md:text-4xl lg:text-5xl"
             >
-              Web Developer
+              Web & mobile app Developer
             </motion.h3>
           </div>
-
-          {/* Description */}
+          Description
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -65,7 +63,6 @@ export default function Hero() {
             Passionate about creating stunning digital experiences that combine
             beautiful design with powerful functionality.
           </motion.p>
-
           {/* CTA Button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -87,39 +84,6 @@ export default function Hero() {
               />
             </motion.button>
           </motion.div>
-
-          {/* Frosted Glass Testimonial Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.6 }}
-            className="glass mt-8 w-full max-w-md rounded-2xl p-6 shadow-2xl lg:mt-16"
-          >
-            <div className="mb-4 flex items-center gap-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#FF6B00] to-[#FFA500] text-2xl font-bold text-white shadow-lg">
-                S
-              </div>
-              <div>
-                <h4 className="text-lg font-semibold text-white">
-                  Sarah Johnson
-                </h4>
-                <p className="text-sm text-white/60">CEO, TechStart Inc.</p>
-              </div>
-            </div>
-            <p className="text-base leading-relaxed text-white/80">
-              &ldquo;Noah's work is exceptional. He delivered a stunning website
-              that perfectly captured our vision. His creativity and technical
-              skills are outstanding!&rdquo;
-            </p>
-            <div className="mt-4 flex gap-1">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className="h-5 w-5 fill-[#FF6B00] text-[#FF6B00]"
-                />
-              ))}
-            </div>
-          </motion.div>
         </motion.div>
 
         {/* Right Column - 3D Character Placeholder & Orbital Animation */}
@@ -127,45 +91,62 @@ export default function Hero() {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
-          className="relative flex h-[500px] items-center justify-center lg:h-[700px]"
+          className="relative order-1 -mt-2 flex h-[460px] -translate-y-6 items-center justify-center md:h-[560px] md:-translate-y-10 lg:order-2 lg:h-[700px] lg:-translate-y-16 lg:justify-end"
         >
-          {/* Character Placeholder */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <motion.div
-              animate={{
-                y: [0, -20, 0],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="relative"
-            >
-              {/* 3D Character Image */}
-              <div className="relative h-64 w-64 md:h-80 md:w-80 lg:h-96 lg:w-96">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative h-full w-full">
-                    <Image
-                      src="/character.png"
-                      alt="Noah - 3D Character"
-                      fill
-                      className="object-contain"
-                      priority
-                    />
-                  </div>
-                </div>
-
-                {/* Glowing effect behind character */}
-                <div className="absolute inset-0 -z-10 rounded-full bg-gradient-to-br from-[#FF6B00]/30 to-transparent blur-2xl"></div>
-              </div>
-            </motion.div>
-          </div>
-
           {/* Solar System Orbital Animation */}
-          <div className="absolute inset-0">
+          <div className="absolute inset-0 z-10 flex items-center justify-center">
             <OrbitalAnimation />
           </div>
+
+          {/* Character - Bottom Half (Behind Orbit) */}
+          <motion.div
+            animate={{
+              y: [0, -20, 0],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute inset-0 z-5 flex items-center justify-center"
+          >
+            <div className="relative h-64 w-64 overflow-hidden md:h-80 md:w-80 lg:h-96 lg:w-96">
+              <Image
+                src="/character.png"
+                alt="Noah - 3D Character Bottom"
+                fill
+                className="object-contain"
+                priority
+                style={{ clipPath: "inset(50% 0 0 0)" }}
+              />
+            </div>
+          </motion.div>
+
+          {/* Character - Top Half (In Front of Orbit) */}
+          <motion.div
+            animate={{
+              y: [0, -20, 0],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute inset-0 z-20 flex items-center justify-center"
+          >
+            <div className="relative h-64 w-64 overflow-hidden md:h-80 md:w-80 lg:h-96 lg:w-96">
+              <Image
+                src="/character.png"
+                alt="Noah - 3D Character Top"
+                fill
+                className="object-contain"
+                priority
+                style={{ clipPath: "inset(0 0 50% 0)" }}
+              />
+              {/* Glowing effect behind character */}
+              <div className="absolute inset-0 -z-10 rounded-full bg-gradient-to-br from-[#FF6B00]/10 to-transparent"></div>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
 
@@ -174,7 +155,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-16 left-1/2 -translate-x-1/2"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}

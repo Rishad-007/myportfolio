@@ -7,7 +7,6 @@ interface TechIcon {
   name: string;
   icon: React.ComponentType<{ className?: string }>;
   color: string;
-  delay: number;
   radius: number;
   speed: number;
 }
@@ -22,7 +21,6 @@ export default function OrbitalAnimation() {
         </svg>
       ),
       color: "text-orange-500",
-      delay: 0,
       radius: 180,
       speed: 20,
     },
@@ -34,7 +32,6 @@ export default function OrbitalAnimation() {
         </svg>
       ),
       color: "text-blue-500",
-      delay: 2.5,
       radius: 180,
       speed: 20,
     },
@@ -46,7 +43,6 @@ export default function OrbitalAnimation() {
         </div>
       ),
       color: "text-yellow-400",
-      delay: 5,
       radius: 180,
       speed: 20,
     },
@@ -54,7 +50,6 @@ export default function OrbitalAnimation() {
       name: "Figma",
       icon: Figma,
       color: "text-purple-500",
-      delay: 7.5,
       radius: 140,
       speed: 15,
     },
@@ -62,7 +57,6 @@ export default function OrbitalAnimation() {
       name: "Canva",
       icon: Palette,
       color: "text-cyan-400",
-      delay: 10,
       radius: 140,
       speed: 15,
     },
@@ -74,7 +68,6 @@ export default function OrbitalAnimation() {
         </svg>
       ),
       color: "text-cyan-300",
-      delay: 12.5,
       radius: 220,
       speed: 25,
     },
@@ -82,7 +75,6 @@ export default function OrbitalAnimation() {
       name: "Next.js",
       icon: Code2,
       color: "text-white",
-      delay: 15,
       radius: 200,
       speed: 22,
     },
@@ -90,7 +82,6 @@ export default function OrbitalAnimation() {
       name: "MongoDB",
       icon: Database,
       color: "text-green-500",
-      delay: 17.5,
       radius: 160,
       speed: 18,
     },
@@ -115,6 +106,7 @@ export default function OrbitalAnimation() {
       {/* Orbiting icons */}
       {techIcons.map((tech, index) => {
         const IconComponent = tech.icon;
+        const initialAngle = (index * 360) / techIcons.length;
 
         return (
           <motion.div
@@ -123,15 +115,15 @@ export default function OrbitalAnimation() {
             style={{
               width: `${tech.radius * 2}px`,
               height: `${tech.radius * 2}px`,
+              rotate: `${initialAngle}deg`,
             }}
             animate={{
-              rotate: 360,
+              rotate: `${initialAngle + 360}deg`,
             }}
             transition={{
               duration: tech.speed,
               repeat: Infinity,
               ease: "linear",
-              delay: tech.delay,
             }}
           >
             <motion.div
@@ -140,16 +132,15 @@ export default function OrbitalAnimation() {
                 backgroundColor: "rgba(255, 107, 0, 0.1)",
               }}
               style={{
-                rotate: `${-tech.delay * 18}deg`, // Counter-rotate to keep icons upright
+                rotate: `${-initialAngle}deg`,
               }}
               animate={{
-                rotate: -360,
+                rotate: `${-(initialAngle + 360)}deg`,
               }}
               transition={{
                 duration: tech.speed,
                 repeat: Infinity,
                 ease: "linear",
-                delay: tech.delay,
               }}
             >
               <div className={tech.color}>
