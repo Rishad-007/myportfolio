@@ -1,25 +1,30 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { image } from "framer-motion/client";
+import Image from "next/image";
 
 const projects = [
   {
-    title: "Atlas AI Workspace",
-    summary:
-      "Full-stack SaaS with LLM-powered workflows, role-based access, and realtime collaboration.",
-    stack: ["Next.js", "TypeScript", "LLM APIs", "Postgres"],
-  },
-  {
-    title: "SignalGrid Analytics",
-    summary:
-      "Event-driven platform for streaming metrics, alerting, and dynamic dashboards.",
-    stack: ["Node.js", "Kafka", "Redis", "Grafana"],
-  },
-  {
-    title: "PulseFit Mobile",
-    summary:
-      "React Native app with offline-first tracking, push notifications, and cloud sync.",
+    title: "AP-BP Debate Timer",
+    summary: "A debate timer for academic and professional settings.",
     stack: ["React Native", "Expo", "Sync", "Notifications"],
+    image: "/AP-BP.png",
+  },
+  {
+    title:
+      "University Convocation Registration, payment and certificate generation system",
+    summary:
+      "A comprehensive system for managing convocation registrations, payments, and certificate generation for universities.",
+    stack: ["React", "Node.js", "Express", "MongoDB"],
+    image: "/Convocations.jpg",
+  },
+  {
+    title: "Personal promotion website",
+    summary:
+      "A personal website to campaign for a political candidate, showcasing their platform, achievements, and upcoming events.",
+    stack: ["Next.js", "Tailwind CSS", "Vercel"],
+    image: "/vote.jpg",
   },
 ];
 
@@ -90,8 +95,14 @@ export default function Projects() {
               transition={{ type: "spring", stiffness: 220, damping: 18 }}
               className="group glass-dark rounded-2xl p-5"
             >
-              <div className="mb-4 flex h-44 items-center justify-center rounded-xl border border-[#FF6B00]/20 bg-[#2b160f]/70 text-sm font-medium text-white/70">
-                Screenshot Placeholder
+              <div className="mb-4 overflow-hidden rounded-xl border border-[#FF6B00]/20 bg-[#2b160f]/70">
+                <Image
+                  src={project.image}
+                  alt={`${project.title} screenshot`}
+                  width={800}
+                  height={450}
+                  className="h-44 w-full object-cover"
+                />
               </div>
               <h3 className="text-xl font-semibold text-white">
                 {project.title}

@@ -59,7 +59,6 @@ export default function Navbar() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {/* Glow effect on hover */}
               <motion.div
                 className="absolute inset-0 rounded-full bg-linear-to-r from-[#FF6B00] to-[#FFA500] opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-70"
                 initial={false}
@@ -68,7 +67,6 @@ export default function Navbar() {
                 }}
               />
 
-              {/* Content */}
               <div className="relative flex items-center gap-2">
                 <Icon
                   className={`h-4 w-4 transition-colors duration-300 ${
@@ -80,15 +78,14 @@ export default function Navbar() {
                 <span
                   className={`text-xs font-medium transition-colors duration-300 sm:text-sm ${
                     isActive
-                      ? "text-[#FF6B00]"
-                      : "text-white/90 group-hover:text-[#FF6B00]"
-                  }`}
+                      ? "inline text-[#FF6B00]"
+                      : "hidden text-white/90 group-hover:text-[#FF6B00]"
+                  } sm:inline`}
                 >
                   {item.label}
                 </span>
               </div>
 
-              {/* Active indicator */}
               {isActive && (
                 <motion.div
                   layoutId="activeIndicator"

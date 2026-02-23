@@ -1,23 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export function useActiveSection() {
   const [activeSection, setActiveSection] = useState("home");
+  const ratiosRef = useRef<Map<string, number>>(new Map());
 
   useEffect(() => {
     // Create Intersection Observer with flexible thresholds for smoother sync
     const observer = new IntersectionObserver(
       (entries) => {
-        const visibleSections = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        entries.forEach((entry) => {
+          ratiosRef.current.set(
+            entry.target.id,
+            entry.isIntersecting ? entry.intersectionRatio : 0,
+          );
+        });
 
-        if (visibleSections.length > 0) {
-          setActiveSection(visibleSections[0].target.id);
+        let bestSection = "";
+        let bestRatio = 0;
+
+        ratiosRef.current.forEach((ratio, id) => {
+          if (ratio > bestRatio) {
+            bestRatio = ratio;
+            bestSection = id;
+          }
+        });
+
+        if (bestSection) {
+          setActiveSection(bestSection);
         }
       },
       {
-        threshold: [0.25, 0.4, 0.55, 0.7],
-        rootMargin: "-80px 0px -30% 0px",
+        threshold: [0, 0.2, 0.4, 0.6, 0.8],
+        rootMargin: "-20% 0px -50% 0px",
       },
     );
 
