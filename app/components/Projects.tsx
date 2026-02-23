@@ -24,7 +24,7 @@ const projects = [
     summary:
       "A personal website to campaign for a political candidate, showcasing their platform, achievements, and upcoming events.",
     stack: ["Next.js", "Tailwind CSS", "Vercel"],
-    image: "/vote.jpg",
+    image: "/Vote.jpg",
   },
 ];
 
