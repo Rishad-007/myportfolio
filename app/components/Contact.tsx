@@ -63,15 +63,17 @@ export default function Contact() {
         body: formData,
       });
 
-      const data = await response.json();
-      if (data.success) {
+      const data: { success?: boolean; message?: string } =
+        await response.json();
+      const isSuccess = response.ok && data.success === true;
+
+      if (isSuccess) {
         setResult("Success!");
         event.currentTarget.reset();
-        setIsSubmitting(false);
         return;
       }
 
-      setResult("Error");
+      setResult(data.message || "Error");
     } catch {
       setResult("Error");
     } finally {
