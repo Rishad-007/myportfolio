@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Sparkles, Send } from "lucide-react";
 import { Linkedin } from "lucide-react";
@@ -45,6 +46,39 @@ const item = {
 };
 
 export default function Contact() {
+  const [result, setResult] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setResult("Sending...");
+
+    const formData = new FormData(event.currentTarget);
+    formData.append("access_key", "e695d56b-8a20-437b-93e5-6d155fbf58d3");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setResult("Success!");
+        event.currentTarget.reset();
+        setIsSubmitting(false);
+        return;
+      }
+
+      setResult("Error");
+    } catch {
+      setResult("Error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section
       id="contact"
@@ -157,13 +191,15 @@ export default function Contact() {
               Response under 24 hours
             </div>
 
-            <form className="space-y-5">
+            <form className="space-y-5" onSubmit={onSubmit}>
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="space-y-2 text-xs font-semibold uppercase tracking-widest text-white/60">
                   Name
                   <input
                     type="text"
+                    name="name"
                     placeholder="Your name"
+                    required
                     className="w-full rounded-xl border border-[#FF6B00]/20 bg-[#120a07] px-4 py-3 text-sm text-white outline-none transition focus:border-[#FF6B00]/50"
                   />
                 </label>
@@ -171,7 +207,9 @@ export default function Contact() {
                   Email
                   <input
                     type="email"
+                    name="email"
                     placeholder="you@email.com"
+                    required
                     className="w-full rounded-xl border border-[#FF6B00]/20 bg-[#120a07] px-4 py-3 text-sm text-white outline-none transition focus:border-[#FF6B00]/50"
                   />
                 </label>
@@ -181,6 +219,7 @@ export default function Contact() {
                 Project Type
                 <input
                   type="text"
+                  name="projectType"
                   placeholder="AI product, mobile app, web platform"
                   className="w-full rounded-xl border border-[#FF6B00]/20 bg-[#120a07] px-4 py-3 text-sm text-white outline-none transition focus:border-[#FF6B00]/50"
                 />
@@ -189,22 +228,27 @@ export default function Contact() {
               <label className="space-y-2 text-xs font-semibold uppercase tracking-widest text-white/60">
                 Message
                 <textarea
+                  name="message"
                   rows={5}
                   placeholder="Tell me about your goals, timeline, and scope."
+                  required
                   className="w-full rounded-xl border border-[#FF6B00]/20 bg-[#120a07] px-4 py-3 text-sm text-white outline-none transition focus:border-[#FF6B00]/50"
                 />
               </label>
 
               <button
-                type="button"
-                className="group flex w-full items-center justify-center gap-3 rounded-2xl bg-[#FF6B00] px-5 py-3 text-sm font-semibold text-white shadow-2xl shadow-[#FF6B00]/40 transition-all duration-300 hover:scale-[1.01]"
+                type="submit"
+                disabled={isSubmitting}
+                className="group flex w-full items-center justify-center gap-3 rounded-2xl bg-[#FF6B00] px-5 py-3 text-sm font-semibold text-white shadow-2xl shadow-[#FF6B00]/40 transition-all duration-300 hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100"
               >
                 <Send className="h-4 w-4" />
-                Send inquiry
+                {isSubmitting ? "Sending..." : "Send inquiry"}
               </button>
 
+              <p className="text-xs text-white/50">{result}</p>
+
               <p className="text-xs text-white/50">
-                Prefer email? Reach out directly at hello@rishad.dev
+                Prefer email? Reach out directly at rishad.nur007@gmail.com
               </p>
             </form>
           </motion.div>
